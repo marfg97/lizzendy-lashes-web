@@ -23,5 +23,14 @@ jobs:
       # 3. Sincronizar los archivos con S3
       - name: Deploy to S3
         run: |
-          aws s3 sync . s3://${{ secrets.AWS_S3_BUCKET }} --delete
+          aws s3 sync . s3://${{ secrets.AWS_S3_BUCKET }} \
+            --exclude "*" \
+            --include "index.html" \
+            --include "*.png" \
+            --include "*.jpg" \
+            --include "*.jpeg" \
+            --include "*.mp4" \
+            --include "*.css" \
+            --include "*.js" \
+            --delete
 
