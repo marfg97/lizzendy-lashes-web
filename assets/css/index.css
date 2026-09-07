@@ -46,6 +46,7 @@
 
   a{color:inherit; text-decoration:none;}
   img{display:block; max-width:100%;}
+  video{display:block; max-width:100%;}
 
   .wrap{
     max-width:1180px;
@@ -409,7 +410,35 @@
     border:10px solid var(--panel);
     box-shadow:0 24px 50px -18px rgba(78,44,85,0.28);
   }
+  /* When the container holds a video, make it square and borderless per request */
+  .detail .arch-frame.video-frame{
+    aspect-ratio:1/1;
+    border-radius:0;
+    border: 12px solid var(--panel);
+    box-shadow:none;
+    overflow:hidden;
+    background:transparent;
+  }
   .detail img{ width:100%; height:100%; object-fit:cover; object-position:50% 20%; }
+  .detail video{
+    width:100%;
+    height:100%;
+    object-fit:cover; /* fill the container while preserving aspect ratio */
+    object-position:center center;
+    background:transparent;
+    will-change:transform; /* improve rendering performance */
+    transform:translateZ(0);
+    -webkit-font-smoothing:antialiased;
+  }
+  /* Rounded corners applied only to the video element */
+  .detail .arch-frame.video-frame video{
+    border-radius:20px;
+    display:block;
+  }
+  /* Avoid upscaling videos beyond their natural size on very large containers */
+  @media (min-width:1400px){
+    .detail .arch-frame.video-frame{ max-width:1200px; margin:0 auto; }
+  }
   .detail-text .quote{
     font-family:'Fraunces', serif;
     font-style:italic;
